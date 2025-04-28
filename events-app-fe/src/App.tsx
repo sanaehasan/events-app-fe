@@ -1,20 +1,25 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import NavBar from './components/NavBar';
 import Home from './components/Home';
+import About from './components/About';
+import Login from './components/Login';
+import UserContext from './UserContext';
+import { useState } from 'react';
+import { userType } from './userType';
 
 function App() {
 
-
+const [user,setUser] = useState<userType|null>(null)
   return (
-    <>
+    <UserContext.Provider value={{user,setUser}} >
       <Header/>
-      <NavBar/>
        <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/login" element={<Login/>} />
        </Routes>
-    </>
+    </UserContext.Provider>
   )
 }
 
