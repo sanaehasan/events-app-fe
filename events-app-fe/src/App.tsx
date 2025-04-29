@@ -7,10 +7,12 @@ import Login from './components/Login';
 import UserContext from './UserContext';
 import { useState } from 'react';
 import { userType } from './userType';
+import Register from './components/Register';
 
 function App() {
 
 const [user,setUser] = useState<userType|null>(null)
+  
   return (
     <UserContext.Provider value={{user,setUser}} >
       <Header/>
@@ -18,6 +20,7 @@ const [user,setUser] = useState<userType|null>(null)
         <Route path="/" element={<Home/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
        </Routes>
     </UserContext.Provider>
   )

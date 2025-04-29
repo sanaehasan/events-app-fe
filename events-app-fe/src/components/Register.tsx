@@ -1,35 +1,33 @@
-import React, { useContext, useState } from "react";
-import { logIn } from "../api";
-import UserContext from "../UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import {  registerUser } from "../api";
+
+import { useNavigate } from "react-router-dom";
 
 
-export default function Login(){
-const context = useContext(UserContext);
+export default function Register(){
+
 const [error,setError] = useState<boolean>(false);
 const navigate = useNavigate()
 
  function HandleSubmit(e:React.SyntheticEvent)  {
     e.preventDefault();
     const target = e.target as typeof e.target & {
-      email: { value: string };
-      password: { value: string };
-    };
- logIn(target.email.value,target.password.value).then((data)=>{
-    context?.setUser(data);
-    sessionStorage.setItem("user",JSON.stringify(data));
-    //localStorage.setItem("user",JSON.stringify(data))
-    //  const us =sessionStorage.getItem("user");
-    //  if(us){
-    //  const ne = JSON.parse(us);
-    //  console.log(ne.username)
-    //  }
-    navigate("/");
+      name: { value: String };
+      username: { value: String };
+      city: { value: String };
+      avatar: { value: String };
+      email: { value: String };
+      password: { value: String };
 
- }).catch(()=>{
-   setError(true)
- });
-    
+    };
+   registerUser(target.name.value, target.username.value,target.avatar.value,target.city.value,target.email.value,target.password.value).then((data)=>{
+        navigate("/login")
+   }).catch(()=>{
+    setError(true);
+   })
+  
+
+
     
  } 
 return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -40,12 +38,70 @@ return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-
             </svg>
       
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+           Register your account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form action="#" method="POST" className="space-y-6" onSubmit={HandleSubmit}>
+             <div>
+              <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
+               Enter your name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900">
+               Enter your userName
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  autoComplete="additional-name"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="city" className="block text-sm/6 font-medium text-gray-900">
+               Enter your city
+              </label>
+              <div className="mt-2">
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  required
+                  autoComplete="home city"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="city" className="block text-sm/6 font-medium text-gray-900">
+               Enter your avatar url
+              </label>
+              <div className="mt-2">
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="text"
+                  autoComplete="off"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
@@ -86,18 +142,13 @@ return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-emerald-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
               >
-                Sign in
+                Submit
               </button>
             </div>
           </form>
             {error? <p className="mt-10 text-center text-sm/6 text-red-600">
-            Incorrect password or email </p>:null}
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-semibold text-emerald-400 hover:text-emerald-500">
-              Register
-            </Link>
-          </p>
+            Registeration failure please try again later </p>:null}
+          
         </div>
       </div>
     </>
