@@ -33,7 +33,14 @@ const registerUser=(name:String|null,username:String,avatar:String|null,city:Str
         return data.user;
     }).catch((err)=>{
         console.log(err)
-       return Promise.reject({msg:"enable register"})
+       return Promise.reject({msg:"Unable register"})
     })
 }
-export {logIn,registerUser}
+const getEvents= ()=>{
+    return api.get("/events").then(({data})=>{
+        return data;
+    }).catch((err)=>{
+            return Promise.reject({msg:"Unable to get Events data"})
+    })
+}
+export {logIn,registerUser,getEvents}
