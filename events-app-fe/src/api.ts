@@ -43,4 +43,11 @@ const getEvents= ()=>{
             return Promise.reject({msg:"Unable to get Events data"})
     })
 }
-export {logIn,registerUser,getEvents}
+const getEventById= (event_id:number)=>{
+    return api.get(`/events/event/${event_id}`).then(({data})=>{
+        return data.event;
+    }).catch((err)=>{
+            return Promise.reject({msg:"Unable to get Events data"})
+    })
+}
+export {logIn,registerUser,getEvents,getEventById}
