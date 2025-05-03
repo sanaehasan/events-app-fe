@@ -20,7 +20,7 @@ const navigate = useNavigate()
       password: { value: String };
 
     };
-   registerUser(target.name.value, target.username.value,target.avatar.value,target.city.value,target.email.value,target.password.value).then((data)=>{
+   registerUser(target.name.value, target.username.value,target.avatar.value,target.city.value,target.email.value,target.password.value).then(()=>{
         navigate("/login")
    }).catch(()=>{
     setError(true);
@@ -147,7 +147,7 @@ return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-
             </div>
           </form>
             {error? <p className="mt-10 text-center text-sm/6 text-red-600">
-            Registeration failure please try again later </p>:null}
+            Registeration failure Email already exist </p>:null}
           
         </div>
       </div>
