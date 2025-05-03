@@ -11,6 +11,7 @@ import Register from './components/Register';
 import Event from './components/Event';
 import AddEvent from './components/AddEvent';
 import EditEvent from './components/EditEvent';
+import Profile from './components/Profile';
 
 function App() {
 
@@ -24,6 +25,7 @@ const [user,setUser] = useState<userType|null>(null)
         <Route path="/about" element={<About/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/profile" element={<Profile/>} />
         <Route path="/event/:event_id" element={<Event/>}/>
         <Route path= "/event" element={<AddEvent/>} />
          <Route path= "/edit-event/:event_id" element={<EditEvent/>} />

@@ -70,9 +70,9 @@ function handleLogout(){
           <Link to="/about" className="text-sm/6 font-semibold text-gray-900">
             About
           </Link>
-          {(context!.user)?<a href="#" className="text-sm/6 font-semibold text-gray-900">
+          {(context!.user)?<Link to="/profile" className="text-sm/6 font-semibold text-gray-900">
             Profile 
-          </a>:null}
+          </Link>:null}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
         {(context!.user)? <button  onClick={handleLogout} className="text-sm/6 font-semibold text-gray-900">
