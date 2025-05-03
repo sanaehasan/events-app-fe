@@ -44,7 +44,7 @@ export default function AddEvent() {
          genre:{value:number},
    
             }
-      console.log(target.genre.value);
+
         addEvent(Number(context!.user?.user_id),`${target.start_date.value} ${target.start_time.value}:00 +0100`, `${target.end_date.value} ${target.end_time.value}:00 +0100`, target.city.value, target.country.value, target.image.value, "0.00",target.title.value, target.description.value,`${target.street_address.value} ${target.region.value} ${target.postal_code.value}`,Number(target.genre.value),String(context?.user?.token)).then((data:eventType)=>{
             setEvent(data)
             setLoading(false);

@@ -63,12 +63,7 @@ export default function Event() {
             <div className="w-full justify-start items-center gap-8 grid lg:grid-cols-2 grid-cols-1">
                 <div className="w-full flex-col justify-start lg:items-start items-center gap-10 inline-flex">
                     <div className="w-full flex-col justify-start lg:items-start items-center gap-4 flex">
-                          {context!.user?.role==="admin"?<div className="w-full flex-col justify-start lg:items-start items-center gap-4 flex"><button   className="sm:w-fit w-1/2 px-3.5 py-2 bg-orange-500 hover:bg-orange-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] items-center flex">
-                        <span className="px-1.5 text-white text-sm font-medium leading-6">Edit event</span>
-                    </button>
-                    <button   onClick={handleDelete} className="sm:w-fit w-1/2 px-3.5 py-2 bg-red-500 hover:bg-red-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
-                        <span className="px-1.5 text-white text-sm font-medium leading-6">Delete event</span>
-                    </button></div>:null }
+                          
                         <h2 className="text-gray-900 text-2xl font-bold font-manrope leading-normal lg:text-start text-center">{event?.title}</h2>
                         <p className="text-gray-500 text-base font-normal leading-normal lg:text-start text-center">{event?.description}</p>
                          <h4 className="text-gray-700 text-l font-semibold font-manrope leading-normal lg:text-start text-center">Starts: {event?.start_date}</h4>
@@ -86,8 +81,16 @@ export default function Event() {
                 </div>
               
                 <img className="lg:mx-0 mx-auto h-full w-full rounded-3xl object-cover" src={event?.image} alt="event image" />
+                {context!.user?.role==="admin"?<div className="w-full flex-wrap justify-start lg:items-start items-center gap-4 flex"><Link to={`/edit-event/${event?.event_id}`}   className="sm:w-fit w-full px-3.5 py-2 bg-orange-500 hover:bg-orange-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
+                        <span className="px-1.5 text-white text-sm font-medium leading-6">Edit event</span>
+                    </Link>
+                    <button   onClick={handleDelete} className="sm:w-fit w-full px-3.5 py-2 bg-red-500 hover:bg-red-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
+                        <span className="px-1.5 text-white text-sm font-medium leading-6">Delete event</span>
+                    </button></div>:null }
             </div>
+            
         </div>
+        
     </section>}
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
