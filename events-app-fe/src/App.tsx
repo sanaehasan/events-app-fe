@@ -12,6 +12,7 @@ import Event from './components/Event';
 import AddEvent from './components/AddEvent';
 import EditEvent from './components/EditEvent';
 import Profile from './components/Profile';
+import NotFound from './components/NotFound';
 
 function App() {
 
@@ -29,6 +30,7 @@ const [user,setUser] = useState<userType|null>(null)
         <Route path="/event/:event_id" element={<Event/>}/>
         <Route path= "/event" element={<AddEvent/>} />
          <Route path= "/edit-event/:event_id" element={<EditEvent/>} />
+          <Route path= "*" element={<NotFound/>} />
        </Routes>
     </UserContext.Provider>
   )
