@@ -1,13 +1,25 @@
 import { useContext } from "react"
 import UserContext from "../UserContext"
+import { deleteAccount } from "../api";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Profile() {
+const navigate = useNavigate();
+const context = useContext(UserContext);
+function handleDelete(e:React.SyntheticEvent){
+        e.preventDefault();
+        deleteAccount(Number(context?.user?.user_id),String(context?.user?.token)).then(()=>{
+             sessionStorage.clear();
+           context?.setUser(null);
+           navigate("/");
+        }).catch((err)=>{
+            alert(err.msg);
+        })
 
-    const context = useContext(UserContext);
-
+}
   return (
-    
+    <>
     <div className="w-full max-w-2xl px-4 md:px-5 lg:px-5 mx-auto justify-center mt-20">
         <img className="w-12 h-12 rounded-full" src={context?.user?.avatar?String(context?.user?.avatar):"/profile.jpg"}  />
       <div className="px-4 sm:px-0">
@@ -33,9 +45,20 @@ export default function Profile() {
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{context?.user?.city}</dd>
           </div>
           
-          
+           
         </dl>
       </div>
+     
     </div>
+     <div className="w-full max-w-2xl px-4 md:px-5 lg:px-5 mx-auto justify-center justify-items-center mt-10">
+     <button
+     type="submit"
+     className="flex w-40 justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+     onClick={handleDelete}      
+              >
+      Delete my account
+     </button>
+     </div>
+     </>
   )
 }

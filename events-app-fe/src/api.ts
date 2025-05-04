@@ -118,4 +118,12 @@ function deleteEvent(event_id:number,token:string){
          return Promise.reject({msg:err.msg})
     })
 }
-export {logIn,registerUser,getEvents,getEventById,addAttendee,getGenre,addEvent,deleteEvent,editEvent}
+
+function deleteAccount(user_id:number,token:string){
+return api.delete(`/users/${user_id}`,{headers:{Authorization:token}}).then(()=>{
+    return true
+}).catch((err)=>{
+    return  Promise.reject({msg:err.msg})
+})
+}
+export {logIn,registerUser,getEvents,getEventById,addAttendee,getGenre,addEvent,deleteEvent,editEvent,deleteAccount}

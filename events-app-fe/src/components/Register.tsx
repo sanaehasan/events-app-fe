@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import {  registerUser } from "../api";
 
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 
 export default function Register(){
 
 const [error,setError] = useState<boolean>(false);
+const [loading,setLoading]=useState<boolean>(false)
 const navigate = useNavigate()
 
  function HandleSubmit(e:React.SyntheticEvent)  {
     e.preventDefault();
+    setLoading(true);
     const target = e.target as typeof e.target & {
       name: { value: String };
       username: { value: String };
@@ -21,6 +24,7 @@ const navigate = useNavigate()
 
     };
    registerUser(target.name.value, target.username.value,target.avatar.value,target.city.value,target.email.value,target.password.value).then(()=>{
+    setLoading(false);
         navigate("/login")
    }).catch(()=>{
     setError(true);
@@ -30,7 +34,8 @@ const navigate = useNavigate()
 
     
  } 
-return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+return <>{loading && <Loading/>}
+<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
            <span className="sr-only">Your Company</span>
             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="fill-emerald-300 mx-auto h-10 w-auto">
