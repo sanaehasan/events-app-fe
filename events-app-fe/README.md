@@ -38,6 +38,10 @@ To test the admin functionalities in the app you will need the an admin account
 
 you can also register as a normal user that can only book events and not manage them.
 
-## Demo
+## Demo link
 
-Insert gif or link to demo
+### Try the app on this online link
+
+https://events-surfer.netlify.app/
+
+### Watch the demo on this link
