@@ -24,6 +24,7 @@ const navigate = useNavigate()
     navigate("/");
 
  }).catch(()=>{
+  setLoading(false);
    setError(true)
  });
     
