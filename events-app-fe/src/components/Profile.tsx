@@ -89,10 +89,12 @@ function handleDeleteEvent(e:React.SyntheticEvent){
       Delete my account
      </button>
      </div>
-    
+     <div className="w-full max-w-2xl px-4 md:px-5 lg:px-5 mx-auto justify-center mt-20 flex flex-wrap">
+      <h3 className="text-base/7 font-semibold text-gray-900">My Events </h3>
+      </div>
       {events?events.map((event:any) => (
     <div className="w-full max-w-2xl px-4 md:px-5 lg:px-5 mx-auto justify-center mt-20 flex flex-wrap">
-      <h3 className="text-base/7 font-semibold text-gray-900">My Events </h3>
+     
      <ul role="list" className="divide-y divide-gray-100">
         <li key={Number(event.event_id)} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-20 gap-x-4">
