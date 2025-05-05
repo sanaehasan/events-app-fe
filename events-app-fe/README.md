@@ -1,4 +1,4 @@
-# Project Title
+# Events app
 
 This is an events web app that allow users to book an event and add it to their google calendar and allows admins to manage the events
 
