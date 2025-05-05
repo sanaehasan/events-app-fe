@@ -2,15 +2,18 @@ import React, { useContext, useState } from "react";
 import { logIn } from "../api";
 import UserContext from "../UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 
 export default function Login(){
 const context = useContext(UserContext);
 const [error,setError] = useState<boolean>(false);
+const [loading,setLoading]=useState<boolean>(false);
 const navigate = useNavigate()
 
  function HandleSubmit(e:React.SyntheticEvent)  {
     e.preventDefault();
+    setLoading(true);
     const target = e.target as typeof e.target & {
       email: { value: string };
       password: { value: string };
@@ -18,12 +21,6 @@ const navigate = useNavigate()
  logIn(target.email.value,target.password.value).then((data)=>{
     context?.setUser(data);
     sessionStorage.setItem("user",JSON.stringify(data));
-    //localStorage.setItem("user",JSON.stringify(data))
-    //  const us =sessionStorage.getItem("user");
-    //  if(us){
-    //  const ne = JSON.parse(us);
-    //  console.log(ne.username)
-    //  }
     navigate("/");
 
  }).catch(()=>{
@@ -32,7 +29,8 @@ const navigate = useNavigate()
     
     
  } 
-return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+return <>{loading?<Loading/>:
+<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
            <span className="sr-only">Your Company</span>
             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="fill-emerald-300 mx-auto h-10 w-auto">
@@ -99,6 +97,6 @@ return <><div className="flex min-h-full flex-1 flex-col justify-center px-6 py-
             </Link>
           </p>
         </div>
-      </div>
+      </div>}
     </>
 }

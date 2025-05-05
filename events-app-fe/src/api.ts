@@ -1,8 +1,6 @@
 import axios from "axios";
 
 
-
-
 const api = axios.create({
   baseURL: "https://events-app-tryx.onrender.com/api",
 });
@@ -126,4 +124,23 @@ return api.delete(`/users/${user_id}`,{headers:{Authorization:token}}).then(()=>
     return  Promise.reject({msg:err.msg})
 })
 }
-export {logIn,registerUser,getEvents,getEventById,addAttendee,getGenre,addEvent,deleteEvent,editEvent,deleteAccount}
+
+function getUsersEvents(user_id:number,token:string){
+
+return api.get(`/events/${user_id}`,{headers:{Authorization:token}}).then(({data})=>{
+   console.log(data);
+    return data.events;
+}).catch((err)=>{
+    console.log(err)
+    return  Promise.reject({status:err.status,msg:err.message})
+})
+}
+
+function deleteAttendee(attendee_id:number, token:string){
+    return api.delete(`/attendees/${attendee_id}`,{headers:{Authorization:token}}).then(()=>{
+        return true
+    }).catch((err)=>{
+    return  Promise.reject({status:err.status,msg:err.message})
+})
+}
+export {logIn,registerUser,getEvents,getEventById,addAttendee,getGenre,addEvent,deleteEvent,editEvent,deleteAccount,getUsersEvents,deleteAttendee}

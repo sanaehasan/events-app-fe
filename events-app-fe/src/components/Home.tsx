@@ -33,7 +33,7 @@ const context =useContext <userContextType|null>(UserContext);
                         <span className="px-1.5 text-white text-sm font-medium leading-6">add Event</span>
                     </Link>:null }
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">  
-    {events&&events.map((e:eventType)=>{return <EventCard kye={e.event_id} event={e}/>})}
+    {events&&events.map((e:eventType)=>{return <EventCard key={e.event_id} event={e}/>})}
         </div>
       </div>
     </div>

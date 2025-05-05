@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import { eventType } from "../eventType";
-import { addAttendee, deleteEvent, getEventById } from "../api";
+import { addAttendee, deleteEvent, getEventById, getUsersEvents } from "../api";
 import UserContext from "../UserContext";
-import { userType } from "../userType";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ExclamationTriangleIcon, CalendarDateRangeIcon } from '@heroicons/react/24/outline'
 import Loading from "./Loading";
@@ -12,30 +11,42 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Event() {
-    type userContextType={
-        user:userType|null,
-        setUser:React.Dispatch<React.SetStateAction<userType|null>>
-    }  
+
     const {event_id} = useParams();
     const [event,setEvent]=useState<eventType|null>(null);
     const [error,setError]= useState<boolean>(false)
     const [open,setOpen] = useState<boolean>(false)
     const [loading,setLoading]= useState<boolean>(true)
     const [booked,setBooked]=useState<boolean>(false)
-    const context = useContext<userContextType|null>(UserContext);
+     const [bookedEvent,setBookedEvent]=useState<boolean>(false)
+    const context = useContext(UserContext);
     const navigate = useNavigate();
 
    
 
     useEffect(()=>{
+
         getEventById(Number(event_id)).then((data)=>{
             setEvent(data);
-            setLoading(false);
+            setLoading(false);    
            
         }).catch(()=>{
             setError(true)
         })
-    },[])
+
+        if(context?.user){
+         getUsersEvents(Number(context?.user?.user_id),String(context?.user!.token)).then((data:any)=>{
+            
+              if(data.find((e:any)=>{return e.event_id===event?.event_id;})){
+                 setBookedEvent(true);
+              }
+            })
+          }
+
+
+    },[event])
+
+
    function handleBooking(e:React.SyntheticEvent){
             e.preventDefault();
 
@@ -44,7 +55,9 @@ export default function Event() {
             }else{
                 addAttendee(Number(context?.user.user_id), Number(event_id),String(context?.user.token)).then((data)=>{
                       if(data.attendee_id){
+                       // console.log(data);
                         setBooked(true);
+                        setBookedEvent(true);
                       }
                 })
             }
@@ -74,9 +87,22 @@ export default function Event() {
                         <h5 className="text-gray-700 text-l font-semibold leading-relaxed lg:text-start text-center">Location: {event?.location}</h5>
 
                     </div>
-                    <button  onClick={handleBooking} className="sm:w-fit w-full px-3.5 py-2 bg-emerald-400 hover:bg-emerald-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
+                   {!bookedEvent?<button  onClick={handleBooking} disabled={booked} className="sm:w-fit w-full px-3.5 py-2 bg-emerald-400 hover:bg-emerald-600 transition-all duration-700 ease-in-out rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
                         <span className="px-1.5 text-white text-sm font-medium leading-6">Book a seat</span>
-                    </button>
+                    </button>:<p className="text-emerald-500 justify-center">You have Already booked this event <a
+                                                                                          href={event?google({
+                                                                                                title: event!.title,
+                                                                                                description: event!.description,
+                                                                                                start: event!.start_date,
+                                                                                                end:event!.end_date,
+                                                                                                location:event!.location
+                                                                                        }):""} 
+                                                                                       className="inline-flex w-full justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-emerald-600 sm:ml-3 sm:w-auto"
+                                                                                       target="_blank"
+                                                                                       onClick={() => setBooked(false)}
+                                                                                        >
+                                                                                       Add to Google Calender
+                                                                                       </a></p>}
                    
                 </div>
               
