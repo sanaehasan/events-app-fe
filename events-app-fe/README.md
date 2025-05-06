@@ -45,3 +45,5 @@ you can also register as a normal user that can only book events and not manage 
 https://events-surfer.netlify.app/
 
 ### Watch the demo on this link
+
+https://youtu.be/3VUyp-p57z8
